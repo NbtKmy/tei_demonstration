@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="bms.00001">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt> 
+                <title level="m" type="main">Walt Whitman to Ernest Rhys, 13 October 1886</title>
+                <title level="m" type="sub">a machine readable transcription</title>
+                <author>Walt Whitman</author>
+                <editor>Kenneth M. Price</editor>
+                <editor>Ed Folsom</editor>
+                <respStmt>
+                    <resp>Transcription and encoding</resp>
+                    <persName xml:id="ss">Stefan Sch&#246;berlein</persName>
+                    <persName xml:id="kb">Kyle Barton</persName>
+                </respStmt>
+                <sponsor>Center for Digital Research in the Humanities, University of
+                    Nebraska-Lincoln</sponsor>
+                <sponsor>University of Iowa</sponsor>
+                <funder>National Historical Publications and Records Commission</funder>
+            </titleStmt>
+            <editionStmt>
+                <edition>
+                    <date>2014</date>
+                </edition>
+            </editionStmt>
+            <publicationStmt>
+                <distributor>The Walt Whitman Archive</distributor>
+                <idno>bms.00001</idno>
+                <address>
+                    <addrLine>Center for Digital Research in the Humanities</addrLine>
+                    <addrLine>319 Love Library</addrLine>
+                    <addrLine>University of Nebraska-Lincoln</addrLine>
+                    <addrLine>P.O. Box 884100</addrLine>
+                    <addrLine>Lincoln, NE 68588-4100</addrLine>
+                </address>
+                <availability>
+                    <p>Copyright &#169; 2012 by Ed Folsom and Kenneth M. Price, all rights reserved.
+                        Items in the Archive may be shared in accordance with the Fair Use
+                        provisions of U.S. copyright law. Redistribution or republication on other
+                        terms, in any medium, requires express written consent from the editors and
+                        advance notification of the publisher, Center for Digital Research in the
+                        Humanities. Permission to reproduce the graphic images in this archive has
+                        been granted by the owners of the originals for this publication only.</p>
+                </availability>
+            </publicationStmt>
+            <sourceDesc>
+                <biblStruct>
+                    <monogr>
+                        <author>Walt Whitman</author>
+                        <editor>Edwin Haviland Miller</editor>
+                        <title xml:id="ehm">The Correspondence</title>
+                        <imprint>
+                            <pubPlace>New York</pubPlace>
+                            <publisher>New York University Press</publisher>
+                            <date notBefore="1961" notAfter="1977">1961-1977</date>
+                            <biblScope unit="volume">4</biblScope>
+                            <biblScope unit="page">52</biblScope>
+                        </imprint>
+                    </monogr>
+                </biblStruct>
+                <bibl>
+                    <author>Walt Whitman</author>
+                    <title>Walt Whitman to Ernest Rhys, 13 October 1886</title>
+                    <date cert="high" when="1886-10-13" xml:id="dat1">October 13, 1886</date>
+                    <orgName xml:id="bms">British Museum</orgName>
+                </bibl>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+            <particDesc>
+                <person role="sender">
+                    <persName key="Whitman, Walt">Walt Whitman</persName>
+                </person>
+                <person role="recipient">
+                    <persName key="Rhys, Ernest" ref="loc.03310_n1">Ernest Rhys</persName>
+                </person>
+            </particDesc>
+            <correspDesc>
+                <correspAction type="sent">
+                    <persName key="Whitman, Walt">Whitman, Walt</persName>
+                    <date when="1886-10-13">October 13, 1886</date>
+                    <location>
+                        <placeName>328 Mickle Street, Camden New Jersey U S America</placeName>
+                        <geo>39.9448223 -75.0906751</geo>
+                    </location>
+                </correspAction>
+            </correspDesc>
+        </profileDesc>
+        <revisionDesc>
+            <change when="2015-04-16" who="#kb">edited</change>
+            <change when="2014-10-28" who="#ss">encoded and annotated from Miller.</change>
+        </revisionDesc>
+    </teiHeader>
+    <text type="letter">
+        <body>
+            <opener>
+                <dateline>
+                    <name type="place">328 Mickle Street, Camden New Jersey U S America<ptr
+                            target="bms.00001_n1"/></name>
+                    <date when="1886-10-13" rend="right">, Oct. 13 1886</date>
+                </dateline>
+            </opener>
+            <p>First I ought to apologize for not answering your letters before. I am always
+                glad to get them. Nothing specially new or different with me. I am willing
+                you should print "Specimen Days" in your series, let W[alter] S[cott] send me
+                what he thinks he can afford, &#38; I shall want 10 copies of the book.<ptr
+                    target="bms.00001_n2"/> I should advise you to leave out the Appendix. If
+                you want it further cut down, let me furnish you with a prepared copy.</p>
+            <closer>
+                <signed>Walt Whitman</signed>
+            </closer>
+        </body>
+    </text>
+</TEI>  

@@ -1,1 +1,2 @@
-# tei_demonstration
+# TEI Demo
+Dies ist Repo für TEI-Demo!
