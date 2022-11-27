@@ -20,21 +20,10 @@ function teiParser(){
     return new Promise((resolve,reject) => {
         let inputs = document.querySelector('#file').files;
         
-        
         var features_arr = [];
+        console.log(inputs.length);
         for (let i = 0; i < inputs.length; i++) {
             let input = inputs[i];
-
-            // feature-obj for geoJson
-            let feature = {
-                type: 'Feature',
-                geometry: {
-                    type: 'Point',
-                    coordinates: []
-                },
-                properties: {
-                }
-            };
 
             let f = {};
             var markers = L.markerClusterGroup();
@@ -55,7 +44,6 @@ function teiParser(){
                 let res_sent = sent_corr.iterateNext();
                 while (res_sent) {
                     text_content += "Sender : " + res_sent.textContent + "<br/>";
-                    feature.properties.sender = res_sent.textContent;
                     f.sender = res_sent.textContent;
                     res_sent = sent_corr.iterateNext();
                 }
@@ -66,7 +54,6 @@ function teiParser(){
                     text_content += "Ort : " + res_geo.textContent + "<br/>";
                     arr = res_geo.textContent.split(' ').map(Number);
                     let arr2 = [arr[1], arr[0]];
-                    feature.geometry.coordinates = arr2;
                     f.coordinates = arr;
                     res_geo = sent_geo.iterateNext();
                 }
@@ -74,7 +61,6 @@ function teiParser(){
                 let res_date = sent_date.iterateNext();
                 while (res_date) {
                     text_content += "Datum : " + res_date.textContent + "<br/>";
-                    feature.properties.date = res_date.textContent;
                     f.date = res_date.textContent;
                     res_date = sent_date.iterateNext();
                 }
@@ -98,14 +84,18 @@ function teiParser(){
                 }
 
                 let marker = L.marker(arr).addTo(map);
-                if (feature.properties.sender == 'Whitman, Walt'){
+                if (f.sender == 'Whitman, Walt'){
                     marker._icon.classList.add("huechange");
                 }
                 marker.bindPopup(text_content);
                 markers.addLayer(marker);
-                feature.properties.text = text_content;
                 f.text = text_content;
                 features_arr.push(f);
+                
+                if (i == inputs.length - 1){
+                    renderChart(makeSeries(features_arr));
+                }
+                
             }, true);
             reader.readAsText(input, 'UTF-8');
         }
@@ -114,52 +104,67 @@ function teiParser(){
     })
 }
 
-///////////////////////////////////////
-/// Render geoJson layer on the map ///
-///////////////////////////////////////
+//////////////////////
+/// Create a chart ///
+//////////////////////
 
-function makeSeries(data) { 
-    var columns = data.map(function(item) { 
+function x(arr1, arr2, arr3){
+
+    for (let j = 0 ; j < arr1.length ; j++){
+        let obj = {};
+        let year = arr1[j].date.slice(0,4);
+        let testNum = arr2.indexOf(year);
+        console.log(year, testNum);
+        if ( testNum == -1){
+            arr2.push(year);
+            obj.date = year;
+            obj.value = 1;
+            arr3.push(obj);
+        } else {
+            arr3[testNum].value += 1;
+        }
+    }
+    return arr3;
+}
+
+function makeSeries(arr) { 
+    let return_arr1 = [];
+    let temp1 = [];
+    console.log(arr.length);
+    let dataForSeries = x(arr, temp1, return_arr1); 
+    console.log(dataForSeries);
+    let columns = dataForSeries.map(function(item) { 
       return { 
-        x: new Date( 
-          +item.date.slice(3, 7), 
-          +item.date.slice(1, 2) * 3 - 3, 
-          1 
-        ).getTime(), 
-        y: item.revenue, 
+        x: new Date(item.date, 0, 1).getTime(), 
+        y: item.value, 
         name: item.date 
       }; 
     }); 
     return [ 
-      { name: 'Revenue', points: columns }
+      { name: 'Letters', points: columns }
     ]; 
   } 
 
-function renderChart(features_arr){
-    return new Promise(function (resolve, reject) {
-        console.log(features_arr);
-        let cpArr = features_arr.json();
-        console.log(cpArr);
-        var f = cpArr[0];
-        console.log(f);
-        features_arr.forEach(obj => {
-            console.log(obj);
-        });
-        resolve();
-    });
-}
-    /*
-    chart = renderChart(makeSeries(features_arr)); 
-
-
-    JSC.Chart("chartDiv", {
-        series: [
-          {
-            points: [{ x: "A", y: 10 }, { x: "B", y: 5 }]
-          }
-        ]
-      });
-      */
+  function renderChart(series) { 
+    return JSC.chart('chartDiv', { 
+      debug: true, 
+      type: 'column solid', 
+      xAxis: { 
+        scale_type: 'time'
+      }, 
+      title_label_text: 
+        'Letters from and to Whitmann', 
+      defaultSeries: { 
+        line_width: 2, 
+        defaultPoint: { 
+          tooltip: '%name<br><b>%yValue</b>', 
+          marker_visible: false, 
+          outline_width: 0 
+        } 
+      }, 
+      series: series 
+    }); 
+  } 
 
 
 ////////////
@@ -169,11 +174,8 @@ function renderChart(features_arr){
 document.querySelector("#file").addEventListener('change', function(e) {
     if (window.File) {
         teiParser()
-        .then(res => {
-            console.log(res);
-            console.log(res[0]);
-            //const jsonPromise = JSON.parse(res);
-            
+        .then((features_arr) => {
+            console.log(features_arr);
         })
     }
 }, true);

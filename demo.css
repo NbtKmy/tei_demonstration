@@ -1,6 +1,9 @@
 @charset "UTF-8";
 
-#map { height: 500px; }
+#map { 
+    height: 500px;
+    width: 80vw;
+}
 
 .leaflet-popup-content {
     margin-top: 20px;
