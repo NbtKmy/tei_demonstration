@@ -17,16 +17,17 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 
 function teiParser(){
-    return new Promise((resolve,reject) => {
         let inputs = document.querySelector('#file').files;
         
         var features_arr = [];
-        console.log(inputs.length);
+        var markers = L.markerClusterGroup();
+        
+        //console.log(inputs.length);
         for (let i = 0; i < inputs.length; i++) {
             let input = inputs[i];
 
             let f = {};
-            var markers = L.markerClusterGroup();
+            
             const reader = new FileReader();
             reader.addEventListener('load', function (e){
                 let res_test = reader.result;
@@ -93,20 +94,22 @@ function teiParser(){
                 features_arr.push(f);
                 
                 if (i == inputs.length - 1){
+                    //console.log(inputs.length);
                     renderChart(makeSeries(features_arr));
                 }
                 
             }, true);
             reader.readAsText(input, 'UTF-8');
+            
         }
         map.addLayer(markers);
-        resolve(features_arr);
-    })
+    
 }
 
 //////////////////////
 /// Create a chart ///
 //////////////////////
+
 
 function x(arr1, arr2, arr3){
 
@@ -173,10 +176,7 @@ function makeSeries(arr) {
 
 document.querySelector("#file").addEventListener('change', function(e) {
     if (window.File) {
-        teiParser()
-        .then((features_arr) => {
-            console.log(features_arr);
-        })
+        teiParser();
     }
 }, true);
 
