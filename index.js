@@ -17,6 +17,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 
 function teiParser(){
+  return new Promise((resolve, reject) => {
         let inputs = document.querySelector('#file').files;
         
         var features_arr = [];
@@ -95,7 +96,8 @@ function teiParser(){
                 
                 if (i == inputs.length - 1){
                     //console.log(inputs.length);
-                    renderChart(makeSeries(features_arr));
+                    //renderChart(makeSeries(features_arr));
+                    resolve(features_arr);
                 }
                 
             }, true);
@@ -103,8 +105,10 @@ function teiParser(){
             
         }
         map.addLayer(markers);
+      });
     
 }
+
 
 //////////////////////
 /// Create a chart ///
@@ -174,10 +178,18 @@ function makeSeries(arr) {
 /// Main ///
 ////////////
 
-document.querySelector("#file").addEventListener('change', function(e) {
-    if (window.File) {
-        teiParser();
+document.querySelector("#file").addEventListener('change', async function(e) {
+  try {  
+  if (window.File) {
+        const features_arr = await teiParser();
+        //console.log(feartures_arr);
+        renderChart(makeSeries(features_arr));
+        
     }
+  }
+  catch(error){
+    console.log(error);
+  }
 }, true);
 
 
